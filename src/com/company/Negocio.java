@@ -30,5 +30,8 @@ public class Negocio {
         Set<Elemento> elementos;
         Cliente cliente;
         Presupuesto presupuesto;
+
+        cliente = new Cliente("Pepe");
+        presupuesto = new Presupuesto(cliente);
     }
 }
