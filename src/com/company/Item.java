@@ -21,6 +21,10 @@ public class Item {
         this.cantidad = cantidad;
     }
 
+    public void agregarCantidad(Integer cantidad) {
+        this.cantidad += cantidad;
+    }
+
     public void setElemento(Elemento elemento) {
         this.elemento = elemento;
     }
@@ -32,6 +36,6 @@ public class Item {
     public void mostrarDatos(){
         System.out.print("Cantidad: " + cantidad);
         elemento.mostrarDatos();
-        System.out.println(" - Precio Subtotal:" + calcularTotal());
+        System.out.print(" - Precio Subtotal:" + calcularTotal());
     }
 }

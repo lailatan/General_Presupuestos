@@ -23,16 +23,24 @@ public class Presupuesto {
     }
 
     public void agregarItem(Item item) {
-        this.items.add(item);
+        Item itemExistente=buscarEnelpresupuesto(item);
+        if (itemExistente!=null) itemExistente.agregarCantidad(item.getCantidad());
+        else this.items.add(item);
     }
 
-    public void sacarItem(Item item) {
+    private Item buscarEnelpresupuesto(Item item) {
+        for (Item i:items){
+            if (i.getElemento().equals(item.getElemento())) return i;
+        }
+        return null;
+    }
+
+    public void eliminarItem(Item item) {
         this.items.remove(item);
     }
 
-    public void modificarItem(Item item) {
-        //this.items.(item);
-        System.out.println("HACER MODIFICAR");
+    public void modificarItem(Item item,Integer cantidad) {
+        item.setCantidad(cantidad);
     }
 
     public Double calcularTotal(){
@@ -45,7 +53,6 @@ public class Presupuesto {
         System.out.println("----------------------------------------------------------------------------------------------------------------");
         System.out.print("Items en el presupuesto de ");
         cliente.mostrarDatos();
-        System.out.println();
         System.out.println("----------------------------------------------------------------------------------------------------------------");
         for (Item i:items) {
             i.mostrarDatos();
