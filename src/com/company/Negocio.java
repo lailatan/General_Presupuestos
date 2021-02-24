@@ -63,6 +63,7 @@ public class Negocio {
                 break;
             case 4:
                 presupuesto.mostrarDatos();
+                break;
         }
     }
 
