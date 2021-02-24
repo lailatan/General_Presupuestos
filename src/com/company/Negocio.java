@@ -1,61 +1,42 @@
 package com.company;
 
-/*
-Crear un sistema que tenga una interfaz que permita al usuario indicar desde un menú lo siguiente:
-
-1) Si quiere agregar elementos al presupuesto.
-2) Si quiere modificar un elemento.
-3) Si quiere eliminar un elemento.
-
-Los elementos/ítems pueden ser productos o servicios.
-Cada producto tiene una cantidad, un precio unitario, un nombre y una descripción.
-Cada servicio tiene un costo por hora y una cantidad de horas. Además del nombre del servicio,
-el nombre de la persona que lo ejecuta y una descripción.
-
-Una vez que el presupuesto está listo (el usuario decide finalizar), mostrar el presupuesto total y
-el detalle de todos los ítems agregados.
-Items --> Producto
-           Servicio
-Persona --> Cliente
-            Técnico
-Presupuesto -- Lista de Items
-                Cliente
- */
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 public class Negocio {
+    private List<Elemento> elementos = new ArrayList<>();
+    private Cliente cliente;
+    private Presupuesto presupuesto;
 
-    public static void main(String[] args) {
-        Integer opcion=1;
-        List<Elemento> elementos = new ArrayList<>();
-        Cliente cliente;
-        Presupuesto presupuesto;
+    public Negocio() {
+        inicializarElementos();
+    }
 
-        inicializarElementos(elementos);
-
+    public void iniciarMenuCliente() {
+        Integer opcion = 1;
         Scanner sn = new Scanner(System.in);
-
-        System.out.print("Ingrese su nombre: ");
-        String nombre=sn.nextLine();
-        cliente = new Cliente(nombre);
-        presupuesto = new Presupuesto(cliente);
-
-
-        while (opcion!=0){
+        pedirdatosCliente();
+        while (opcion != 0) {
             imprimirMenu();
             opcion = sn.nextInt();
-
-            ejecutarOpcionMenu(opcion,elementos,presupuesto);
+            ejecutarOpcionMenu(opcion);
         }
-
 
     }
 
-    private static void ejecutarOpcionMenu(Integer opcion, List<Elemento> elementos,Presupuesto presupuesto) {
+    private void pedirdatosCliente(){
+        Scanner sn = new Scanner(System.in);
+        System.out.print("Ingrese su nombre: ");
+        String nombre = sn.nextLine();
+        cliente = new Cliente(nombre);
+        presupuesto = new Presupuesto(cliente);
+    }
+
+    private void ejecutarOpcionMenu(Integer opcion) {
         switch (opcion){
             case 1:
-                Elemento elementoElegido=pedirElemento(elementos);
+                Elemento elementoElegido=pedirElemento();
                 if (elementoElegido!=null) {
                     Integer cantidad = pedirCantidad();
                     presupuesto.agregarItem(new Item(cantidad, elementoElegido));
@@ -67,7 +48,7 @@ public class Negocio {
         }
     }
 
-    private static Integer pedirCantidad() {
+    private Integer pedirCantidad() {
         Integer cantidad=0;
         while (cantidad<1) {
             System.out.print("Ingrese la cantidad:");
@@ -77,7 +58,7 @@ public class Negocio {
         return cantidad;
     }
 
-    private static Elemento pedirElemento(List<Elemento> elementos) {
+    private Elemento pedirElemento() {
         Integer i = 1;
         System.out.println("Seleccione un Elemento:");
         System.out.println("0. Ninguno.");
@@ -92,7 +73,7 @@ public class Negocio {
         return (nroElemento==0)?null:elementos.get(nroElemento);
     }
 
-    private static void imprimirMenu() {
+    private void imprimirMenu() {
         System.out.println("Seleccione la opcion deseada:");
         System.out.println("1. Agregar elemento al Presupuesto.");
         System.out.println("2. Modificar elemento del Presupuesto.");
@@ -102,7 +83,7 @@ public class Negocio {
         System.out.println("0. Salir.");
     }
 
-    private static void inicializarElementos(List<Elemento> elementos){
+    private void inicializarElementos(){
         Tecnico tecnico1=new Tecnico("Adrián");
         Tecnico tecnico2=new Tecnico("Eduardo");
 
@@ -111,6 +92,4 @@ public class Negocio {
         elementos.add(new Servicio("ColocacionLedPared","Colocación de TV Led en Pared",200.0,2,tecnico1));
         elementos.add(new Servicio("ColocacionLedTecho","Colocación de TV Led colgando del techo",300.0,2,tecnico2));
     }
-
 }
-
