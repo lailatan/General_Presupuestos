@@ -22,6 +22,7 @@ Presupuesto -- Lista de Items
                 Cliente
  */
 
+import java.util.Scanner;
 import java.util.Set;
 
 public class Negocio {
@@ -31,7 +32,12 @@ public class Negocio {
         Cliente cliente;
         Presupuesto presupuesto;
 
-        cliente = new Cliente("Pepe");
+        Scanner sn = new Scanner(System.in);
+
+        System.out.print("Ingrese su nombre: ");
+        cliente = new Cliente(sn.nextLine());
+
+        System.out.println("Ingrese ");
         presupuesto = new Presupuesto(cliente);
     }
 }

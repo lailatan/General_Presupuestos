@@ -25,6 +25,7 @@ public class Servicio extends Elemento{
         return tecnico;
     }
 
+    @Override
     public Double getPrecio(){
         return cantidadHoras*precioHora;
     }

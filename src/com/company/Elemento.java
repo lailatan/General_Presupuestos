@@ -1,6 +1,6 @@
 package com.company;
 
-public abstract class Elemento {
+public abstract class Elemento implements IElemento {
     protected String nombre;
     protected String descripcion;
 
@@ -17,7 +17,4 @@ public abstract class Elemento {
         return descripcion;
     }
 
-    public abstract void mostrarDatos();
-
-    public abstract Double getPrecio();
 }

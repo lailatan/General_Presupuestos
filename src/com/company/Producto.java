@@ -8,6 +8,7 @@ public class Producto extends Elemento{
         this.precio=precio;
     }
 
+    @Override
     public Double getPrecio() {
         return precio;
     }
