@@ -4,7 +4,7 @@ public abstract class Persona {
     protected String nombre;
 
     public Persona(String nombre) {
-        nombre = nombre;
+        this.nombre = nombre;
     }
 
     public String getNombre() {

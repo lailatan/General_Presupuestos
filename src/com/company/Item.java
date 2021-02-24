@@ -32,6 +32,6 @@ public class Item {
     public void mostrarDatos(){
         System.out.print("Cantidad: " + cantidad);
         elemento.mostrarDatos();
-        System.out.println("Precio Subtotal:" + calcularTotal());
+        System.out.println(" - Precio Subtotal:" + calcularTotal());
     }
 }

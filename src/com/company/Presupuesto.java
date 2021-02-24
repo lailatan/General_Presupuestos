@@ -1,22 +1,24 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Presupuesto {
         private Cliente cliente;
-        private Set<Item> items;
+        private List<Item> items;
 
     public Presupuesto(Cliente cliente) {
         this.cliente = cliente;
-        items=new HashSet<>();
+        items=new ArrayList<>();
     }
 
     public Cliente getCliente() {
         return cliente;
     }
 
-    public Set<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
@@ -35,7 +37,7 @@ public class Presupuesto {
 
     public Double calcularTotal(){
         Double total=0.0;
-        for (Item i:items) total *= i.calcularTotal();
+        for (Item i:items) total += i.calcularTotal();
         return total;
     }
 

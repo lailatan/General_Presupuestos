@@ -15,8 +15,8 @@ public class Producto extends Elemento{
 
     @Override
     public void mostrarDatos() {
-        System.out.print(" Nombre: " + nombre);
-        System.out.print(" Descripcion: " + descripcion);
-        System.out.print(" Precio: " + precio);
+        System.out.print(" - Nombre: " + nombre);
+        System.out.print(" - Descripcion: " + descripcion);
+        System.out.print(" - Precio: " + precio);
     }
 }
