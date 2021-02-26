@@ -6,7 +6,7 @@ public class Tecnico extends Persona{
     }
 
     @Override
-    public void mostrarDatos() {
-        System.out.println("Técnico: " + nombre);
+    public void toStringDatos() {
+        System.out.printf("%20s" , nombre);
     }
 }

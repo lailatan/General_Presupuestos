@@ -32,10 +32,12 @@ public class Servicio extends Elemento{
 
     @Override
     public void mostrarDatos() {
-        System.out.print(" - Nombre: " + nombre);
-        System.out.print(" - Descripcion: " + descripcion);
-        System.out.print(" - Precio Hora: " + precioHora);
+        //System.out.printf("%20s %40s %6.2f %3d %6.2f", nombre);
+        System.out.print(" - Nombre: "+ nombre);
+        System.out.print(" - Descripcion: " + descripcion + "\n");
+        System.out.print("              - Precio Hora: " + precioHora);
         System.out.print(" - Cantidad Hora: " + cantidadHoras);
+        System.out.print(" - Técnico: " + tecnico.getNombre());
         System.out.print(" - Precio: " + getPrecio());
 
     }

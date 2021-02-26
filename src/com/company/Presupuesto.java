@@ -52,7 +52,8 @@ public class Presupuesto {
     public void mostrarDatos(){
         System.out.println("----------------------------------------------------------------------------------------------------------------");
         System.out.print("Items en el presupuesto de ");
-        cliente.mostrarDatos();
+        cliente.toStringDatos();
+        System.out.println();
         System.out.println("----------------------------------------------------------------------------------------------------------------");
         for (Item i:items) {
             i.mostrarDatos();
@@ -61,5 +62,9 @@ public class Presupuesto {
         System.out.println("----------------------------------------------------------------------------------------------------------------");
         System.out.println("Costo Total del Presupuesto: " + calcularTotal());
         System.out.println("----------------------------------------------------------------------------------------------------------------");
+    }
+
+    public boolean tieneItems() {
+        return items.size()>0;
     }
 }

@@ -14,12 +14,11 @@ el nombre de la persona que lo ejecuta y una descripción.
 
 Una vez que el presupuesto está listo (el usuario decide finalizar), mostrar el presupuesto total y
 el detalle de todos los ítems agregados.
-Items --> Producto
-           Servicio
-Persona --> Cliente
-            Técnico
-Presupuesto -- Lista de Items
-                Cliente
+
+
+Los usuarios hacen fila para pedir presupuestos y esos presupuestos al final
+del día se muestran en el orden de llegada.
+
  */
 
 import java.util.*;
@@ -28,7 +27,16 @@ public class Main {
 
     public static void main(String[] args) {
         Negocio servicioTV = new Negocio();
-        servicioTV.iniciarMenuCliente();
+
+        Queue <Cliente> fila = new LinkedList<>();
+        fila.add(new Cliente("Pedro Garcia"));
+        fila.add(new Cliente("Ana Moreno"));
+        fila.add(new Cliente("Juan Lopez"));
+        fila.add(new Cliente("Maria Silva"));
+
+        servicioTV.setFilaClientes(fila);
+        servicioTV.iniciarAtenciónCliente();
+        servicioTV.mostrarPresupuestosDelDia();
     }
 
 

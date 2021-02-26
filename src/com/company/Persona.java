@@ -11,5 +11,5 @@ public abstract class Persona {
         return nombre;
     }
 
-    public abstract void mostrarDatos();
+    public abstract void toStringDatos();
 }
