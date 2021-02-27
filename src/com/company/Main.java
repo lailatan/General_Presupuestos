@@ -31,11 +31,12 @@ public class Main {
         Queue <Cliente> fila = new LinkedList<>();
         fila.add(new Cliente("Pedro Garcia"));
         fila.add(new Cliente("Ana Moreno"));
-        fila.add(new Cliente("Juan Lopez"));
-        fila.add(new Cliente("Maria Silva"));
+        //fila.add(new Cliente("Juan Lopez"));
+        //fila.add(new Cliente("Maria Silva"));
 
         servicioTV.setFilaClientes(fila);
-        servicioTV.iniciarAtenciónCliente();
+        servicioTV.agregarClienteALaFila(new Cliente("Alfredo Perez"));
+        servicioTV.iniciarAtencionCliente();
         servicioTV.mostrarPresupuestosDelDia();
     }
 

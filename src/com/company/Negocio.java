@@ -7,27 +7,36 @@ public class Negocio {
     private Queue<Cliente> filaClientes ;
     private List<Presupuesto> presupuestos ;
 
+    private Scanner sn;
+
     public Negocio() {
         inicializarElementos();
         filaClientes=new LinkedList<>();
         presupuestos =  new ArrayList<>();
+        sn = new Scanner(System.in);
     }
 
     public void setFilaClientes(Queue<Cliente> filaClientes) {
-        this.filaClientes = filaClientes;
+        this.filaClientes.addAll(filaClientes);
     }
 
-    public void iniciarAtenciónCliente() {
+    public void agregarClienteALaFila(Cliente cliente){
+        this.filaClientes.add(cliente);
+    }
+
+    public void iniciarAtencionCliente() {
         while (filaClientes.size()>0) {
             Presupuesto presupuesto=new Presupuesto(filaClientes.poll());
             iniciarMenuCliente(presupuesto);
             if (presupuesto.tieneItems())
-            presupuestos.add(presupuesto);
+                presupuestos.add(presupuesto);
         }
     }
 
     public void mostrarPresupuestosDelDia(){
+        System.out.println("****************************************************************************************************************");
         System.out.println("Cierre del Dia. Total del Presupuestos: " + presupuestos.size() );
+        System.out.println("****************************************************************************************************************");
         for (Presupuesto p:presupuestos){
             p.mostrarDatos();
         }
@@ -35,7 +44,6 @@ public class Negocio {
 
     private void iniciarMenuCliente(Presupuesto  presupuesto) {
         Integer opcion = 1;
-        Scanner sn = new Scanner(System.in);
         //pedirdatosCliente();
         mostrarBienvenida(presupuesto);
         while (opcion != 0) {
@@ -49,10 +57,7 @@ public class Negocio {
     private void mostrarBienvenida(Presupuesto presupuesto) {
         System.out.println("****************************************************************************************************************");
         System.out.println("Bienvenido a la tienda " + presupuesto.getCliente().getNombre() + "!!");
-        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
-        System.out.println("Vamos a armar un presuesto a tu medida!");
-        System.out.println("Comencemos.....");
-        System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
+        System.out.println("Vamos a armar un presuesto a tu medida! Comencemos......");
     }
 
     private void mostrarDespedida(Presupuesto presupuesto) {
@@ -61,12 +66,10 @@ public class Negocio {
         System.out.println("Gracias por presupuestar con nosotros!! ");
         System.out.println("****************************************************************************************************************");
         System.out.println();
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println();
     }
 /*
     private void pedirdatosCliente(){
-        Scanner sn = new Scanner(System.in);
         System.out.print("Ingrese su nombre: ");
         String nombre = sn.nextLine();
         cliente = new Cliente(nombre);
@@ -85,17 +88,21 @@ public class Negocio {
                 }
                 break;
             case 2:
-                itemElegido=pedirItemdelPresupuesto("Modificar", presupuesto);
-                if (itemElegido!=null) {
-                    Integer cantidad = pedirCantidad();
-                    presupuesto.modificarItem(itemElegido,cantidad);
-                }
+                if (presupuesto.tieneItems()){
+                    itemElegido=pedirItemdelPresupuesto("Modificar", presupuesto);
+                    if (itemElegido!=null) {
+                        Integer cantidad = pedirCantidad();
+                        presupuesto.modificarItem(itemElegido, cantidad);
+                    }
+                } else System.out.println("No hay items en el presupuesto todavía");
                 break;
             case 3:
-                itemElegido=pedirItemdelPresupuesto("Eliminar", presupuesto);
-                if (itemElegido!=null) {
-                    presupuesto.eliminarItem(itemElegido);
-                }
+                if (presupuesto.tieneItems()){
+                    itemElegido=pedirItemdelPresupuesto("Eliminar", presupuesto);
+                    if (itemElegido!=null) {
+                        presupuesto.eliminarItem(itemElegido);
+                    }
+                } else System.out.println("No hay items en el presupuesto todavía");
                 break;
             case 4:
                 presupuesto.mostrarDatos();
@@ -106,18 +113,23 @@ public class Negocio {
     }
 
     private Item pedirItemdelPresupuesto(String accion,Presupuesto  presupuesto) {
-        Integer i = 0;
-        System.out.println("Seleccioná el Item a " + accion + ":");
-        for (Item item: presupuesto.getItems()) {
-            i++;
-            System.out.print(i + ". ");
-            item.mostrarDatos();;
-            System.out.println();
-        }
-        System.out.println("0.  - Ninguno.");
-        System.out.print("Item --> ");
-        Scanner sn = new Scanner(System.in);
-        Integer nroItem=sn.nextInt();
+        Integer i ;
+        Integer nroItem;
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
+        do {
+            i=0;
+            System.out.println("Seleccioná el Item a " + accion + ":");
+            for (Item item : presupuesto.getItems()) {
+                i++;
+                System.out.print(i + ". ");
+                item.mostrarDatos();
+                ;
+                System.out.println();
+            }
+            System.out.println("0.  - Ninguno.");
+            System.out.print("Item --> ");
+            nroItem = sn.nextInt();
+        } while (nroItem<0 || nroItem>i);
         return (nroItem==0)?null:presupuesto.getItems().get(nroItem-1);
     }
 
@@ -125,7 +137,6 @@ public class Negocio {
         Integer cantidad=0;
         while (cantidad<1) {
             System.out.print("Ingrese la cantidad: ");
-            Scanner sn = new Scanner(System.in);
             cantidad = sn.nextInt();
         }
         return cantidad;
@@ -133,27 +144,33 @@ public class Negocio {
 
     private Elemento pedirElemento() {
         Integer i = 0;
-        System.out.println("Seleccioná un Elemento:");
-        for (Elemento e:elementos) {
-            i++;
-            System.out.print(i + ". ");
-            e.mostrarDatos();
-            System.out.println();
-        }
-        System.out.println("0.  - Ninguno.");
-        System.out.print("Elemento --> ");
-        Scanner sn = new Scanner(System.in);
-        Integer nroElemento=sn.nextInt();
+        Integer nroElemento;
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
+        do {
+            i=0;
+            System.out.println("Seleccioná un Elemento:");
+            for (Elemento e : elementos) {
+                i++;
+                System.out.print(i + ". ");
+                e.mostrarDatos();
+                System.out.println();
+            }
+            System.out.println("0.  - Ninguno.");
+            System.out.print("Elemento --> ");
+            nroElemento = sn.nextInt();
+        } while (nroElemento<0 || nroElemento>i);
         return (nroElemento==0)?null:elementos.get(nroElemento-1);
     }
 
     private void imprimirMenu() {
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
         System.out.println("Seleccioná la opcion que deseas:");
         System.out.println("1. Agregar elemento al Presupuesto.");
         System.out.println("2. Modificar elemento del Presupuesto.");
         System.out.println("3. Eliminar elemento del Presupuesto.");
         System.out.println("4. Cerrar Presupuesto.");
         System.out.println("0. Salir.");
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
         System.out.print("Opcion --> ");
     }
 
